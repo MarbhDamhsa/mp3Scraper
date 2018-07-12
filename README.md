@@ -6,8 +6,8 @@ Built with Netbeans, Maven, Jetty
 
 # Dependencies:
 
-mp3agic: https://github.com/mpatric/mp3agic
-H2 Database: http://www.h2database.com/html/main.html
+mp3agic: https://github.com/mpatric/mp3agic<br>
+H2 Database: http://www.h2database.com/html/main.html<br>
 Jetty Servlet 9.4.11
 
 # Output:
@@ -15,4 +15,4 @@ Jetty Servlet 9.4.11
 Output is written to HTML by the servlet through use of StringBuilder
 
 Example:
-https://i.imgur.com/m9xMnBw.png
+<img src="https://i.imgur.com/m9xMnBw.png">
