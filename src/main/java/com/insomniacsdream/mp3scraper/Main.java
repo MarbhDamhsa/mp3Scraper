@@ -3,28 +3,20 @@ package com.insomniacsdream.mp3scraper;
 
 import com.mpatric.mp3agic.*;
 import java.awt.Desktop;
-//import org.h2.*;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.lang.Exception;
 import java.net.URI;
+import java.nio.file.DirectoryStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-//import org.h2.tools.Server;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     
@@ -44,6 +36,7 @@ public class Main {
         }
         
         //Gather Files
+        
         List<Path> mp3Paths = new ArrayList<>();
         
         try (DirectoryStream<Path> paths = Files.newDirectoryStream(mp3Directory, "*.mp3")) {
@@ -102,62 +95,4 @@ public class Main {
         
     }//main
     
-    
-    public static class Song {
-        
-        private final String artist;
-        private final String year;
-        private final String album;
-        private final String title;
-        
-        public Song(String artist, String year, String album, String title){
-            this.artist = artist;
-            this.year = year;
-            this.album = album;
-            this.title = title;
-        }
-        
-        public String getArtist(){
-            return artist;
-        }
-        
-        public String getYear(){
-            return year;
-        }
-        
-        public String getAlbum(){
-            return album;
-        }
-        
-        public String getTitle(){
-            return title;
-        }
-        
-    }//Song
-    
-    public static class SongServlet extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-            StringBuilder builder = new StringBuilder();
-            try (Connection conn = DriverManager.getConnection("jdbc:h2:~/mydatabase")){
-                
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("select * from SONGS");
-                
-                while (rs.next()){
-                    builder.append("<tr class=\"table\">")
-                            .append("<td>").append(rs.getString("year")).append("</td>")
-                            .append("<td>").append(rs.getString("artist")).append("</td>")
-                            .append("<td>").append(rs.getString("album")).append("</td>")
-                            .append("<td>").append(rs.getString("title")).append("</td>")
-                            .append("</tr>");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            
-            String string = "<html><h1>Your Songs</h1><table><tr><th>Year</th><th>Artist</th><th>Album</th><th>Title</th></tr>" + builder.toString() + "</table></html>";
-            resp.getWriter().write(string);
-        }
-    }
-}
+}//Main.java
